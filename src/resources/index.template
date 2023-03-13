@@ -1,0 +1,78 @@
+<html>
+    <title>Tasks list</title>
+    <head>
+        <style>
+            table, th, td \{
+              border: 1px solid black;
+            \}
+        </style>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">List of your tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{ for task in tasks }}
+
+                    {{if task.2.completed}}
+                        <tr>
+                            <td scope="row"> {task.0} </td>
+                            <td> {task.1} </td>
+                            <td> {task.2.name} </td>
+                            <td> {task.2.statement} </td>
+                            <td> Completed </td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td scope="row"> {task.0} </td>
+                            <td> {task.1} </td>
+                            <td> {task.2.name} </td>
+                            <td> {task.2.statement} </td>
+                            <td>
+                                <form action="update_task_done" method="get" class="update-task">
+                                    <button name="task_id" value="{task.1}">
+                                        Mark done
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{endif}}
+
+                {{ endfor }}
+
+            </tbody>
+        </table>
+
+        <form action="create_task" method="get" class="new-task">
+        	<div class="new-task">
+        		<label for="name">Enter task name: </label>
+        		<input type="text" name="name" id="name" required>
+        	</div>
+        	<div class="new-task">
+                <label for="statement">Enter task statement: </label>
+                <input type="text" name="statement" id="statement" required>
+            </div>
+            <div class="new-task">
+                <label for="statement">Enter task list to attach: </label>
+                <input type="text" name="list" id="list">
+            </div>
+            <div class="new-task">
+                <button> Create new task </button>
+            </div>
+        </form>
+
+        <form action="delete_task_list" method="get" class="del-list">
+            <div class="del-list">
+                <label for="list_id">Enter list name: </label>
+                <input type="text" name="list_id" id="list_id" required>
+            </div>
+            <div class="del-list">
+                <button> Delete list </button>
+            </div>
+        </form>
+    </body>
+</html>
